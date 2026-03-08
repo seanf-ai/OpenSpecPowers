@@ -13,45 +13,112 @@
   <a href="./LICENSE"><img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-blue.svg?style=flat-square" /></a>
 </p>
 
+<p align="center"><strong>Spec-driven AI development that stays practical.</strong></p>
+
+<p align="center">
+  OpenSpecPowers gives AI coding agents a lightweight spec layer so they can plan changes,
+  implement them, and verify the result without relying on fragile chat history alone.
+</p>
+
+<p align="center">
+  Built for brownfield codebases, personal projects, and teams that want more predictability
+  without adopting a heavyweight process.
+</p>
+
 <details>
-<summary><strong>The most loved spec framework.</strong></summary>
+<summary><strong>Project Snapshot</strong></summary>
 
 [![Stars](https://img.shields.io/github/stars/seanf-ai/OpenSpecPowers?style=flat-square&label=Stars)](https://github.com/seanf-ai/OpenSpecPowers/stargazers)
 [![Downloads](https://img.shields.io/npm/dm/@seanf-ai/openspecpowers?style=flat-square&label=Downloads/mo)](https://www.npmjs.com/package/@seanf-ai/openspecpowers)
 [![Contributors](https://img.shields.io/github/contributors/seanf-ai/OpenSpecPowers?style=flat-square&label=Contributors)](https://github.com/seanf-ai/OpenSpecPowers/graphs/contributors)
 
 </details>
-<p></p>
-Our philosophy:
-
-```text
-→ fluid not rigid
-→ iterative not waterfall
-→ easy not complex
-→ built for brownfield not just greenfield
-→ scalable from personal projects to enterprises
-```
 
 > [!TIP]
-> **New workflow now available!** We've rebuilt OpenSpecPowers with a new artifact-guided workflow.
+> New here? Start with the `core` path:
+> `/opsp:propose -> /opsp:apply -> /opsp:archive`
 >
-> Run `/opsp:propose "your idea"` to get started. → [Learn more here](docs/opsp.md)
+> Want the full artifact workflow? See [OPSP Workflow](docs/opsp.md).
 
-<p align="center">
-  Follow updates on <a href="https://github.com/seanf-ai/OpenSpecPowers">GitHub</a> · Use <a href="https://github.com/seanf-ai/OpenSpecPowers/issues">Issues</a> for bugs and requests.
-</p>
+## Why teams use it
 
-<!-- TODO: Add GIF demo of /opsp:propose → /opsp:archive workflow -->
+- **Agree before you build** - generate proposal, specs, design, and tasks before code starts
+- **Stay organized** - every change gets its own folder and archive trail
+- **Work fluidly** - update artifacts as you learn, instead of getting stuck in rigid phases
+- **Raise quality automatically** - built-in power gates enforce evidence, verification, and root-cause thinking
+- **Use the tools you already have** - works with 20+ AI assistants and existing repos
+
+## Start in 60 seconds
+
+**Requires Node.js 20.19.0 or higher.**
+
+1. Install OpenSpecPowers:
+
+```bash
+npm install -g @seanf-ai/openspecpowers@latest
+```
+
+2. Initialize it inside your project:
+
+```bash
+cd your-project
+openspecpowers init
+```
+
+3. Tell your AI what to build:
+
+```text
+/opsp:propose add-dark-mode
+/opsp:apply
+/opsp:archive
+```
+
+That is the default quick path and the best starting point for most users.
+
+<details>
+<summary><strong>Alternative installation options</strong></summary>
+
+One-command installer:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/seanf-ai/OpenSpecPowers/main/scripts/install-openspowers.sh | bash -s -- --prefix "$HOME/.local"
+```
+
+Install and bootstrap the current directory:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/seanf-ai/OpenSpecPowers/main/scripts/install-openspowers.sh | bash -s -- --prefix "$HOME/.local" --init "$PWD"
+```
+
+Also works with pnpm, yarn, bun, and nix. See [installation options](docs/installation.md).
+
+</details>
+
+## Choose your path
+
+| If you want to...                       | Start here               | Typical flow                                                            |
+| --------------------------------------- | ------------------------ | ----------------------------------------------------------------------- |
+| Ship a straightforward feature or fix   | `core` profile           | `/opsp:propose -> /opsp:apply -> /opsp:archive`                         |
+| Investigate first, then implement       | `core` + `/opsp:explore` | `/opsp:explore -> /opsp:propose -> /opsp:apply`                         |
+| Control every artifact explicitly       | expanded workflow        | `/opsp:new -> /opsp:ff -> /opsp:apply -> /opsp:verify -> /opsp:archive` |
+| Work on parallel or higher-risk changes | expanded workflow        | `/opsp:new` or `/opsp:propose`, then use explicit change names          |
+
+To enable the expanded workflow (`/opsp:new`, `/opsp:continue`, `/opsp:ff`, `/opsp:verify`, `/opsp:sync`, `/opsp:bulk-archive`, `/opsp:onboard`):
+
+```bash
+openspecpowers config profile
+openspecpowers update
+```
 
 ## See it in action
 
 ```text
 You: /opsp:propose add-dark-mode
 AI:  Created openspecpowers/changes/add-dark-mode/
-     ✓ proposal.md — why we're doing this, what's changing
-     ✓ specs/       — requirements and scenarios
-     ✓ design.md    — technical approach
-     ✓ tasks.md     — implementation checklist
+     ✓ proposal.md - why we're doing this, what's changing
+     ✓ specs/      - requirements and scenarios
+     ✓ design.md   - technical approach
+     ✓ tasks.md    - implementation checklist
      Ready for implementation!
 
 You: /opsp:apply
@@ -76,70 +143,20 @@ AI:  Archived to openspecpowers/changes/archive/2025-01-23-add-dark-mode/
 
 </details>
 
-## Quick Start
+## Read next
 
-**Requires Node.js 20.19.0 or higher.**
+- **[Getting Started](docs/getting-started.md)** - first-time setup and your first change
+- **[Workflows](docs/workflows.md)** - common patterns for features, bugs, and parallel work
+- **[Commands](docs/commands.md)** - slash command reference
+- **[CLI](docs/cli.md)** - terminal reference
+- **[Supported Tools](docs/supported-tools.md)** - integrations and install paths
+- **[Concepts](docs/concepts.md)** - how specs, changes, and archives fit together
+- **[Customization](docs/customization.md)** - project config and schema customization
+- **[Power Gates](docs/power-gates.md)** - built-in quality enforcement
+- **[GitHub Publishing](docs/github-publishing.md)** - publish under your own account
+- **[SEO Guide](docs/seo.md)** - improve discoverability on GitHub and npm
 
-Install OpenSpecPowers globally:
-
-```bash
-npm install -g @seanf-ai/openspecpowers@latest
-```
-
-One-command installer (after you host this repo):
-
-```bash
-curl -fsSL https://raw.githubusercontent.com/seanf-ai/OpenSpecPowers/main/scripts/install-openspowers.sh | bash -s -- --prefix "$HOME/.local"
-```
-
-One-command install + project bootstrap in current directory:
-
-```bash
-curl -fsSL https://raw.githubusercontent.com/seanf-ai/OpenSpecPowers/main/scripts/install-openspowers.sh | bash -s -- --prefix "$HOME/.local" --init "$PWD"
-```
-
-Or navigate to your project directory and initialize:
-
-```bash
-cd your-project
-openspecpowers init
-```
-
-Now tell your AI: `/opsp:propose <what-you-want-to-build>`
-
-If you want the expanded workflow (`/opsp:new`, `/opsp:continue`, `/opsp:ff`, `/opsp:verify`, `/opsp:sync`, `/opsp:bulk-archive`, `/opsp:onboard`), select it with `openspecpowers config profile` and apply with `openspecpowers update`.
-
-> [!NOTE]
-> Not sure if your tool is supported? [View the full list](docs/supported-tools.md) – we support 20+ tools and growing.
->
-> Also works with pnpm, yarn, bun, and nix. [See installation options](docs/installation.md).
-
-## Docs
-
-→ **[Getting Started](docs/getting-started.md)**: first steps<br>
-→ **[Workflows](docs/workflows.md)**: combos and patterns<br>
-→ **[Commands](docs/commands.md)**: slash commands & skills<br>
-→ **[CLI](docs/cli.md)**: terminal reference<br>
-→ **[Supported Tools](docs/supported-tools.md)**: tool integrations & install paths<br>
-→ **[Concepts](docs/concepts.md)**: how it all fits<br>
-→ **[Multi-Language](docs/multi-language.md)**: multi-language support<br>
-→ **[Customization](docs/customization.md)**: make it yours<br>
-→ **[Power Gates](docs/power-gates.md)**: embedded quality enforcement
-→ **[GitHub Publishing](docs/github-publishing.md)**: publish to your own account
-→ **[SEO Guide](docs/seo.md)**: improve discoverability on GitHub and npm
-
-
-## Why OpenSpecPowers?
-
-AI coding assistants are powerful but unpredictable when requirements live only in chat history. OpenSpecPowers adds a lightweight spec layer so you agree on what to build before any code is written.
-
-- **Agree before you build** — human and AI align on specs before code gets written
-- **Stay organized** — each change gets its own folder with proposal, specs, design, and tasks
-- **Work fluidly** — update any artifact anytime, no rigid phase gates
-- **Use your tools** — works with 20+ AI assistants via slash commands
-- **Enforce quality** — integrated power gates for test-first execution, root-cause debugging, and evidence-based completion
-
-### How we compare
+## How OpenSpecPowers compares
 
 **vs. [Spec Kit](https://github.com/github/spec-kit)** (GitHub) — Thorough but heavyweight. Rigid phase gates, lots of Markdown, Python setup. OpenSpecPowers is lighter and lets you iterate freely.
 
@@ -235,8 +252,6 @@ We collect only command names and version to understand usage patterns. No argum
 See [MAINTAINERS.md](MAINTAINERS.md) for the list of core maintainers and advisors who help guide the project.
 
 </details>
-
-
 
 ## License
 
