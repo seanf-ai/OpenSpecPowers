@@ -1,0 +1,36 @@
+name: Feature request
+description: Propose a new capability or workflow improvement
+title: "feat: "
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Please describe the user problem first, then the proposed solution.
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem Statement
+      description: What user pain does this solve?
+      placeholder: As a user, I struggle with ...
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed Solution
+      description: What should happen?
+      placeholder: Add a command/workflow that ...
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives Considered
+      description: What other approaches did you consider?
+  - type: textarea
+    id: context
+    attributes:
+      label: Additional Context
+      description: Mockups, links, related issues, etc.
+

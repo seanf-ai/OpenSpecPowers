@@ -1,0 +1,56 @@
+name: Bug report
+description: Report a reproducible bug
+title: "bug: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting. Please provide a minimal reproducible case.
+  - type: textarea
+    id: summary
+    attributes:
+      label: Summary
+      description: What happened and what did you expect?
+      placeholder: Describe the bug and expected behavior.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Reproduction Steps
+      description: Exact steps to reproduce the issue
+      placeholder: |
+        1. Run ...
+        2. Execute ...
+        3. Observe ...
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs / Error Output
+      description: Paste relevant console output
+      render: shell
+  - type: input
+    id: version
+    attributes:
+      label: OpenSpecPowers Version
+      placeholder: "e.g. 1.2.0"
+    validations:
+      required: true
+  - type: input
+    id: node
+    attributes:
+      label: Node.js Version
+      placeholder: "e.g. 22.18.0"
+    validations:
+      required: true
+  - type: input
+    id: os
+    attributes:
+      label: OS
+      placeholder: "e.g. macOS 15 / Ubuntu 24.04 / Windows 11"
+    validations:
+      required: true
+

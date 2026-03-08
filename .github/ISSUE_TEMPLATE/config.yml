@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Usage and setup help
+    url: https://github.com/seanf-ai/OpenSpecPowers/discussions
+    about: Ask questions in Discussions when available.
