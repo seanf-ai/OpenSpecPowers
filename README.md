@@ -1,9 +1,6 @@
 <p align="center">
   <a href="https://github.com/seanf-ai/OpenSpecPowers">
-    <picture>
-      <source srcset="assets/openspecpowers_bg.png">
-      <img src="assets/openspecpowers_bg.png" alt="OpenSpecPowers logo">
-    </picture>
+    <img src="assets/openspecpowers_cover.svg" alt="OpenSpecPowers cover">
   </a>
 </p>
 
@@ -114,14 +111,14 @@ openspecpowers update
 
 ```mermaid
 flowchart LR
-    A[Idea or bug] --> B[/opsp:explore<br/>optional]
-    B --> C[/opsp:propose<br/>or /opsp:new + /opsp:ff]
-    C --> D[Change folder created<br/>proposal, specs, design, tasks]
-    D --> E[/opsp:apply]
-    E --> F[Code + tests + task updates]
-    F --> G[/opsp:verify<br/>recommended for higher-risk work]
-    G --> H[/opsp:archive]
-    H --> I[Specs updated<br/>change archived]
+    A["Idea or bug"] --> B["/opsp:explore (optional)"]
+    B --> C["/opsp:propose or /opsp:new + /opsp:ff"]
+    C --> D["Change folder: proposal + specs + design + tasks"]
+    D --> E["/opsp:apply"]
+    E --> F["Code + tests + task updates"]
+    F --> G["/opsp:verify for higher-risk work"]
+    G --> H["/opsp:archive"]
+    H --> I["Specs updated and change archived"]
 ```
 
 ## See it in action
@@ -149,10 +146,10 @@ AI:  Archived to openspecpowers/changes/archive/2025-01-23-add-dark-mode/
 ```
 
 <details>
-<summary><strong>OpenSpecPowers Dashboard</strong></summary>
+<summary><strong>OpenSpecPowers Workflow Preview</strong></summary>
 
 <p align="center">
-  <img src="assets/openspecpowers_dashboard.png" alt="OpenSpecPowers dashboard preview" width="90%">
+  <img src="assets/openspecpowers_workflow_preview.svg" alt="OpenSpecPowers workflow preview" width="90%">
 </p>
 
 </details>
