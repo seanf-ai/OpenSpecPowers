@@ -163,6 +163,28 @@ Run this inside each project to regenerate AI guidance and ensure the latest sla
 openspecpowers update
 ```
 
+## Releasing
+
+OpenSpecPowers now supports tag-driven npm publishing through GitHub Actions.
+
+1. Bump the version locally:
+
+```bash
+npm version patch
+```
+
+2. Push the commit and tag:
+
+```bash
+git push origin main --follow-tags
+```
+
+3. GitHub Actions publishes `@seanf-ai/openspecpowers` automatically when the pushed tag matches `package.json`.
+
+Repository requirement:
+
+- Add repository secret `NPM_TOKEN`
+
 ## Usage Notes
 
 **Model selection**: OpenSpecPowers works best with high-reasoning models. We recommend Opus 4.5 and GPT 5.2 for both planning and implementation.

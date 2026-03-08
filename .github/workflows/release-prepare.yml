@@ -1,20 +1,20 @@
-name: Release (prepare)
+name: Release
 
 on:
   push:
-    branches: [main]
+    tags:
+      - 'v*'
+  workflow_dispatch:
 
 permissions:
   contents: write
-  pull-requests: write
-  id-token: write # Required for npm OIDC trusted publishing
 
 concurrency:
   group: release-${{ github.ref }}
   cancel-in-progress: false
 
 jobs:
-  prepare:
+  publish:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -27,22 +27,34 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: '24' # Node 24 includes npm 11.5.1+ required for OIDC
+          node-version: '22'
           cache: 'pnpm'
           registry-url: 'https://registry.npmjs.org'
 
-      - run: pnpm install --frozen-lockfile
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
 
-      # Opens/updates the Version Packages PR; publishes when the Version PR merges
-      - name: Create/Update Version PR
-        id: changesets
-        uses: changesets/action@v1
-        with:
-          title: 'chore(release): version packages'
-          createGithubReleases: true
-          # Use CI-specific release script: relies on version PR having been merged
-          # so package.json already contains the bumped version.
-          publish: pnpm run release:ci
+      - name: Verify tag matches package version
+        run: |
+          TAG_VERSION="${GITHUB_REF_NAME#v}"
+          PACKAGE_VERSION="$(node -p "require('./package.json').version")"
+          if [ "$TAG_VERSION" != "$PACKAGE_VERSION" ]; then
+            echo "Tag version ($TAG_VERSION) does not match package.json ($PACKAGE_VERSION)"
+            exit 1
+          fi
+
+      - name: Build
+        run: pnpm run build
+
+      - name: Test
+        run: pnpm test
+
+      - name: Publish to npm
+        run: npm publish --access public
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          # npm authentication handled via OIDC trusted publishing (no token needed)
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Create GitHub release
+        uses: softprops/action-gh-release@v2
+        with:
+          generate_release_notes: true

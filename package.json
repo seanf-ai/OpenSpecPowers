@@ -18,7 +18,10 @@
   "homepage": "https://github.com/seanf-ai/OpenSpecPowers",
   "repository": {
     "type": "git",
-    "url": "https://github.com/seanf-ai/OpenSpecPowers"
+    "url": "git+https://github.com/seanf-ai/OpenSpecPowers.git"
+  },
+  "bugs": {
+    "url": "https://github.com/seanf-ai/OpenSpecPowers/issues"
   },
   "license": "MIT",
   "author": "OpenSpecPowers Contributors",

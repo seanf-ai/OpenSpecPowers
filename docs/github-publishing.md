@@ -59,6 +59,25 @@ After first push, configure:
 - Enable Issues
 - Enable Discussions (optional, recommended)
 - Default labels and issue templates
+- Repository secret: `NPM_TOKEN` for automated npm publishing
+
+## 5.1) Automatic npm Publishing
+
+This repository uses tag-driven publishing.
+
+Release flow:
+
+```bash
+npm version patch
+git push origin main --follow-tags
+```
+
+GitHub Actions will:
+
+- verify the pushed tag matches `package.json`
+- build and test the package
+- publish to npm using `NPM_TOKEN`
+- create a GitHub Release for the tag
 
 ## 6) Open-Source Baseline Files
 
@@ -84,4 +103,3 @@ For your GitHub profile page:
 - website link
 - profile README (optional but useful)
 - pinned repositories
-
