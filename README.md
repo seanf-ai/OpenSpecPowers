@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://github.com/seanf-ai/OpenSpecPowers">
-    <img src="assets/openspecpowers_cover.svg" alt="OpenSpecPowers cover">
+    <img src="https://raw.githubusercontent.com/seanf-ai/OpenSpecPowers/main/assets/openspecpowers_cover.svg" alt="OpenSpecPowers cover">
   </a>
 </p>
 
@@ -149,7 +149,7 @@ AI:  Archived to openspecpowers/changes/archive/2025-01-23-add-dark-mode/
 <summary><strong>OpenSpecPowers Workflow Preview</strong></summary>
 
 <p align="center">
-  <img src="assets/openspecpowers_workflow_preview.svg" alt="OpenSpecPowers workflow preview" width="90%">
+  <img src="https://raw.githubusercontent.com/seanf-ai/OpenSpecPowers/main/assets/openspecpowers_workflow_preview.svg" alt="OpenSpecPowers workflow preview" width="90%">
 </p>
 
 </details>
