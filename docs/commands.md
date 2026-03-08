@@ -8,24 +8,24 @@ For workflow patterns and when to use each command, see [Workflows](workflows.md
 
 ### Default Quick Path (`core` profile)
 
-| Command | Purpose |
-|---------|---------|
+| Command         | Purpose                                                     |
+| --------------- | ----------------------------------------------------------- |
 | `/opsp:propose` | Create a change and generate planning artifacts in one step |
-| `/opsp:explore` | Think through ideas before committing to a change |
-| `/opsp:apply` | Implement tasks from the change |
-| `/opsp:archive` | Archive a completed change |
+| `/opsp:explore` | Think through ideas before committing to a change           |
+| `/opsp:apply`   | Implement tasks from the change                             |
+| `/opsp:archive` | Archive a completed change                                  |
 
 ### Expanded Workflow Commands (custom workflow selection)
 
-| Command | Purpose |
-|---------|---------|
-| `/opsp:new` | Start a new change scaffold |
-| `/opsp:continue` | Create the next artifact based on dependencies |
-| `/opsp:ff` | Fast-forward: create all planning artifacts at once |
-| `/opsp:verify` | Validate implementation matches artifacts |
-| `/opsp:sync` | Merge delta specs into main specs |
-| `/opsp:bulk-archive` | Archive multiple changes at once |
-| `/opsp:onboard` | Guided tutorial through the complete workflow |
+| Command              | Purpose                                             |
+| -------------------- | --------------------------------------------------- |
+| `/opsp:new`          | Start a new change scaffold                         |
+| `/opsp:continue`     | Create the next artifact based on dependencies      |
+| `/opsp:ff`           | Fast-forward: create all planning artifacts at once |
+| `/opsp:verify`       | Validate implementation matches artifacts           |
+| `/opsp:sync`         | Merge delta specs into main specs                   |
+| `/opsp:bulk-archive` | Archive multiple changes at once                    |
+| `/opsp:onboard`      | Guided tutorial through the complete workflow       |
 
 The default global profile is `core`. To enable expanded workflow commands, run `openspecpowers config profile`, select workflows, then run `openspecpowers update` in your project.
 
@@ -38,6 +38,7 @@ The default global profile is `core`. To enable expanded workflow commands, run 
 Create a new change and generate planning artifacts in one step. This is the default start command in the `core` profile.
 
 **Syntax:**
+
 ```text
 /opsp:propose [change-name-or-description]
 ```
@@ -48,11 +49,13 @@ Create a new change and generate planning artifacts in one step. This is the def
 | `change-name-or-description` | No | Kebab-case name or plain-language change description |
 
 **What it does:**
+
 - Creates `openspecpowers/changes/<change-name>/`
 - Generates artifacts needed before implementation (for `spec-driven`: proposal, specs, design, tasks)
 - Stops when the change is ready for `/opsp:apply`
 
 **Example:**
+
 ```text
 You: /opsp:propose add-dark-mode
 
@@ -65,6 +68,7 @@ AI:  Created openspecpowers/changes/add-dark-mode/
 ```
 
 **Tips:**
+
 - Use this for the fastest end-to-end path
 - If you want step-by-step artifact control, enable expanded workflows and use `/opsp:new` + `/opsp:continue`
 
@@ -75,6 +79,7 @@ AI:  Created openspecpowers/changes/add-dark-mode/
 Think through ideas, investigate problems, and clarify requirements before committing to a change.
 
 **Syntax:**
+
 ```
 /opsp:explore [topic]
 ```
@@ -85,6 +90,7 @@ Think through ideas, investigate problems, and clarify requirements before commi
 | `topic` | No | What you want to explore or investigate |
 
 **What it does:**
+
 - Opens an exploratory conversation with no structure required
 - Investigates the codebase to answer questions
 - Compares options and approaches
@@ -92,6 +98,7 @@ Think through ideas, investigate problems, and clarify requirements before commi
 - Can transition to `/opsp:propose` (default) or `/opsp:new` (expanded workflow) when insights crystallize
 
 **Example:**
+
 ```text
 You: /opsp:explore
 
@@ -117,6 +124,7 @@ AI:  Ready when you are. Run /opsp:propose add-jwt-auth to begin.
 ```
 
 **Tips:**
+
 - Use when requirements are unclear or you need to investigate
 - No artifacts are created during exploration
 - Good for comparing multiple approaches before deciding
@@ -131,6 +139,7 @@ Start a new change scaffold. Creates the change folder and waits for you to gene
 This command is part of the expanded workflow set (not included in the default `core` profile).
 
 **Syntax:**
+
 ```
 /opsp:new [change-name] [--schema <schema-name>]
 ```
@@ -142,18 +151,21 @@ This command is part of the expanded workflow set (not included in the default `
 | `--schema` | No | Workflow schema to use (default: from config or `spec-driven`) |
 
 **What it does:**
+
 - Creates `openspecpowers/changes/<change-name>/` directory
 - Creates `.openspecpowers.yaml` metadata file in the change folder
 - Shows the first artifact template ready for creation
 - Prompts for change name and schema if not provided
 
 **What it creates:**
+
 ```
 openspecpowers/changes/<change-name>/
 └── .openspecpowers.yaml    # Change metadata (schema, created date)
 ```
 
 **Example:**
+
 ```
 You: /opsp:new add-dark-mode
 
@@ -165,6 +177,7 @@ AI:  Created openspecpowers/changes/add-dark-mode/
 ```
 
 **Tips:**
+
 - Use descriptive names: `add-feature`, `fix-bug`, `refactor-module`
 - Avoid generic names like `update`, `changes`, `wip`
 - Schema can also be set in project config (`openspecpowers/config.yaml`)
@@ -176,6 +189,7 @@ AI:  Created openspecpowers/changes/add-dark-mode/
 Create the next artifact in the dependency chain. Creates one artifact at a time for incremental progress.
 
 **Syntax:**
+
 ```
 /opsp:continue [change-name]
 ```
@@ -186,6 +200,7 @@ Create the next artifact in the dependency chain. Creates one artifact at a time
 | `change-name` | No | Which change to continue (inferred from context if not provided) |
 
 **What it does:**
+
 - Queries the artifact dependency graph
 - Shows which artifacts are ready vs blocked
 - Creates the first ready artifact
@@ -193,6 +208,7 @@ Create the next artifact in the dependency chain. Creates one artifact at a time
 - Shows what becomes available after creation
 
 **Example:**
+
 ```
 You: /opsp:continue
 
@@ -215,6 +231,7 @@ AI:  Change: add-dark-mode
 ```
 
 **Tips:**
+
 - Use when you want to review each artifact before proceeding
 - Good for complex changes where you want control
 - Multiple artifacts may become ready simultaneously
@@ -227,6 +244,7 @@ AI:  Change: add-dark-mode
 Fast-forward through artifact creation. Creates all planning artifacts at once.
 
 **Syntax:**
+
 ```
 /opsp:ff [change-name]
 ```
@@ -237,12 +255,14 @@ Fast-forward through artifact creation. Creates all planning artifacts at once.
 | `change-name` | No | Which change to fast-forward (inferred from context if not provided) |
 
 **What it does:**
+
 - Creates all artifacts in dependency order
 - Tracks progress via todo list
 - Stops when all `apply-required` artifacts are complete
 - Reads each dependency before creating the next artifact
 
 **Example:**
+
 ```
 You: /opsp:ff add-dark-mode
 
@@ -258,6 +278,7 @@ AI:  Fast-forwarding add-dark-mode...
 ```
 
 **Tips:**
+
 - Use when you have a clear picture of what you're building
 - Faster than `/opsp:continue` for straightforward changes
 - You can still edit artifacts afterward
@@ -270,6 +291,7 @@ AI:  Fast-forwarding add-dark-mode...
 Implement tasks from the change. Works through the task list, writing code and checking off items.
 
 **Syntax:**
+
 ```
 /opsp:apply [change-name]
 ```
@@ -280,12 +302,14 @@ Implement tasks from the change. Works through the task list, writing code and c
 | `change-name` | No | Which change to implement (inferred from context if not provided) |
 
 **What it does:**
+
 - Reads `tasks.md` and identifies incomplete tasks
 - Works through tasks one by one
 - Writes code, creates files, runs tests as needed
 - Marks tasks complete with checkboxes `[x]`
 
 **Example:**
+
 ```
 You: /opsp:apply
 
@@ -309,6 +333,7 @@ AI:  Implementing add-dark-mode...
 ```
 
 **Tips:**
+
 - Can resume where you left off if interrupted
 - Use for parallel changes by specifying the change name
 - Completion state is tracked in `tasks.md` checkboxes
@@ -320,6 +345,7 @@ AI:  Implementing add-dark-mode...
 Validate that implementation matches your change artifacts. Checks completeness, correctness, and coherence.
 
 **Syntax:**
+
 ```
 /opsp:verify [change-name]
 ```
@@ -330,6 +356,7 @@ Validate that implementation matches your change artifacts. Checks completeness,
 | `change-name` | No | Which change to verify (inferred from context if not provided) |
 
 **What it does:**
+
 - Checks three dimensions of implementation quality
 - Searches codebase for implementation evidence
 - Reports issues categorized as CRITICAL, WARNING, or SUGGESTION
@@ -337,13 +364,14 @@ Validate that implementation matches your change artifacts. Checks completeness,
 
 **Verification dimensions:**
 
-| Dimension | What it validates |
-|-----------|-------------------|
+| Dimension        | What it validates                                               |
+| ---------------- | --------------------------------------------------------------- |
 | **Completeness** | All tasks done, all requirements implemented, scenarios covered |
-| **Correctness** | Implementation matches spec intent, edge cases handled |
-| **Coherence** | Design decisions reflected in code, patterns consistent |
+| **Correctness**  | Implementation matches spec intent, edge cases handled          |
+| **Coherence**    | Design decisions reflected in code, patterns consistent         |
 
 **Example:**
+
 ```
 You: /opsp:verify
 
@@ -376,6 +404,7 @@ AI:  Verifying add-dark-mode...
 ```
 
 **Tips:**
+
 - Run before archiving to catch mismatches early
 - Warnings don't block archive but indicate potential issues
 - Good for reviewing AI's work before committing
@@ -388,6 +417,7 @@ AI:  Verifying add-dark-mode...
 **Optional command.** Merge delta specs from a change into main specs. Archive will prompt to sync if needed, so you typically don't need to run this manually.
 
 **Syntax:**
+
 ```
 /opsp:sync [change-name]
 ```
@@ -398,6 +428,7 @@ AI:  Verifying add-dark-mode...
 | `change-name` | No | Which change to sync (inferred from context if not provided) |
 
 **What it does:**
+
 - Reads delta specs from change folder
 - Parses ADDED/MODIFIED/REMOVED/RENAMED sections
 - Merges changes into main `openspecpowers/specs/` directory
@@ -405,6 +436,7 @@ AI:  Verifying add-dark-mode...
 - Does not archive the change (remains active)
 
 **Example:**
+
 ```text
 You: /opsp:sync
 
@@ -425,14 +457,15 @@ AI:  Syncing add-dark-mode delta specs...
 
 **When to use manually:**
 
-| Scenario | Use sync? |
-|----------|-----------|
-| Long-running change, want specs in main before archiving | Yes |
-| Multiple parallel changes need the updated base specs | Yes |
-| Want to preview/review the merge separately | Yes |
-| Quick change, going straight to archive | No (archive handles it) |
+| Scenario                                                 | Use sync?               |
+| -------------------------------------------------------- | ----------------------- |
+| Long-running change, want specs in main before archiving | Yes                     |
+| Multiple parallel changes need the updated base specs    | Yes                     |
+| Want to preview/review the merge separately              | Yes                     |
+| Quick change, going straight to archive                  | No (archive handles it) |
 
 **Tips:**
+
 - Sync is intelligent, not copy-paste
 - Can add scenarios to existing requirements without duplicating
 - Change stays active after sync (not archived)
@@ -445,6 +478,7 @@ AI:  Syncing add-dark-mode delta specs...
 Archive a completed change. Finalizes the change and moves it to the archive folder.
 
 **Syntax:**
+
 ```
 /opsp:archive [change-name]
 ```
@@ -455,6 +489,7 @@ Archive a completed change. Finalizes the change and moves it to the archive fol
 | `change-name` | No | Which change to archive (inferred from context if not provided) |
 
 **What it does:**
+
 - Checks artifact completion status
 - Checks task completion (warns if incomplete)
 - Offers to sync delta specs if not already synced
@@ -462,6 +497,7 @@ Archive a completed change. Finalizes the change and moves it to the archive fol
 - Preserves all artifacts for audit trail
 
 **Example:**
+
 ```text
 You: /opsp:archive
 
@@ -485,6 +521,7 @@ AI:  ✓ Synced specs to openspecpowers/specs/ui/spec.md
 ```
 
 **Tips:**
+
 - Archive won't block on incomplete tasks, but will warn
 - Delta specs can be synced during archive or beforehand
 - Archived changes are preserved for history
@@ -497,6 +534,7 @@ AI:  ✓ Synced specs to openspecpowers/specs/ui/spec.md
 Archive multiple completed changes at once. Handles spec conflicts between changes.
 
 **Syntax:**
+
 ```
 /opsp:bulk-archive [change-names...]
 ```
@@ -507,6 +545,7 @@ Archive multiple completed changes at once. Handles spec conflicts between chang
 | `change-names` | No | Specific changes to archive (prompts to select if not provided) |
 
 **What it does:**
+
 - Lists all completed changes
 - Validates each change before archiving
 - Detects spec conflicts across changes
@@ -514,6 +553,7 @@ Archive multiple completed changes at once. Handles spec conflicts between chang
 - Archives in chronological order
 
 **Example:**
+
 ```
 You: /opsp:bulk-archive
 
@@ -541,6 +581,7 @@ AI:  ✓ Archived add-dark-mode
 ```
 
 **Tips:**
+
 - Good for parallel work streams
 - Conflict resolution is agentic (checks codebase)
 - Changes are archived in order of creation
@@ -553,11 +594,13 @@ AI:  ✓ Archived add-dark-mode
 Guided onboarding through the complete OpenSpecPowers workflow. An interactive tutorial using your actual codebase.
 
 **Syntax:**
+
 ```
 /opsp:onboard
 ```
 
 **What it does:**
+
 - Walks through a complete workflow cycle with narration
 - Scans your codebase for real improvement opportunities
 - Creates an actual change with real artifacts
@@ -566,6 +609,7 @@ Guided onboarding through the complete OpenSpecPowers workflow. An interactive t
 - Explains each step as it happens
 
 **Phases:**
+
 1. Welcome and codebase analysis
 2. Finding an improvement opportunity
 3. Creating a change (`/opsp:new`)
@@ -579,6 +623,7 @@ Guided onboarding through the complete OpenSpecPowers workflow. An interactive t
 11. Summary and next steps
 
 **Example:**
+
 ```
 You: /opsp:onboard
 
@@ -601,6 +646,7 @@ AI:  Welcome to OpenSpecPowers!
 ```
 
 **Tips:**
+
 - Best for new users learning the workflow
 - Uses real code, not toy examples
 - Creates a real change you can keep or discard
@@ -612,13 +658,13 @@ AI:  Welcome to OpenSpecPowers!
 
 Different AI tools use slightly different command syntax. Use the format that matches your tool:
 
-| Tool | Syntax Example |
-|------|----------------|
-| Claude Code | `/opsp:propose`, `/opsp:apply` |
-| Cursor | `/opsp-propose`, `/opsp-apply` |
-| Windsurf | `/opsp-propose`, `/opsp-apply` |
-| Copilot (IDE) | `/opsp-propose`, `/opsp-apply` |
-| Trae | Skill-based invocations such as `/openspecpowers-propose`, `/openspecpowers-apply-change` (no generated `opsp-*` command files) |
+| Tool          | Syntax Example                                                                                                                  |
+| ------------- | ------------------------------------------------------------------------------------------------------------------------------- |
+| Claude Code   | `/opsp:propose`, `/opsp:apply`                                                                                                  |
+| Cursor        | `/opsp-propose`, `/opsp-apply`                                                                                                  |
+| Windsurf      | `/opsp-propose`, `/opsp-apply`                                                                                                  |
+| Copilot (IDE) | `/opsp-propose`, `/opsp-apply`                                                                                                  |
+| Trae          | Skill-based invocations such as `/openspecpowers-propose`, `/openspecpowers-apply-change` (no generated `opsp-*` command files) |
 
 The intent is the same across tools, but how commands are surfaced can differ by integration.
 
@@ -626,23 +672,23 @@ The intent is the same across tools, but how commands are surfaced can differ by
 
 ---
 
-## Legacy Commands
+## Historical Commands
 
-These commands use the older "all-at-once" workflow. They still work but OPSP commands are recommended.
+These older `/openspecpowers:*` slash commands are included here as a migration reference for pre-OPSP installations.
 
-| Command | What it does |
-|---------|--------------|
-| `/openspecpowers:proposal` | Create all artifacts at once (proposal, specs, design, tasks) |
-| `/openspecpowers:apply` | Implement the change |
-| `/openspecpowers:archive` | Archive the change |
+They are not the recommended workflow for current OpenSpecPowers setups. For active usage, prefer `/opsp:*` commands. For upgrade guidance, see the [migration guide](migration-guide.md).
 
-**When to use legacy commands:**
-- Existing projects using the old workflow
-- Simple changes where you don't need incremental artifact creation
-- Preference for the all-or-nothing approach
+| Historical command         | Modern equivalent |
+| -------------------------- | ----------------- |
+| `/openspecpowers:proposal` | `/opsp:propose`   |
+| `/openspecpowers:apply`    | `/opsp:apply`     |
+| `/openspecpowers:archive`  | `/opsp:archive`   |
 
-**Migrating to OPSP:**
-Legacy changes can be continued with OPSP commands. The artifact structure is compatible.
+**When this section matters:**
+
+- You're upgrading an older repo or tool integration
+- You're reading archived discussions or screenshots that mention old commands
+- You need a command mapping during migration
 
 ---
 
@@ -653,6 +699,7 @@ Legacy changes can be continued with OPSP commands. The artifact structure is co
 The command couldn't identify which change to work on.
 
 **Solutions:**
+
 - Specify the change name explicitly: `/opsp:apply add-dark-mode`
 - Check that the change folder exists: `openspecpowers list`
 - Verify you're in the right project directory
@@ -662,6 +709,7 @@ The command couldn't identify which change to work on.
 All artifacts are either complete or blocked by missing dependencies.
 
 **Solutions:**
+
 - Run `openspecpowers status --change <name>` to see what's blocking
 - Check if required artifacts exist
 - Create missing dependency artifacts first
@@ -671,6 +719,7 @@ All artifacts are either complete or blocked by missing dependencies.
 The specified schema doesn't exist.
 
 **Solutions:**
+
 - List available schemas: `openspecpowers schemas`
 - Check spelling of schema name
 - Create the schema if it's custom: `openspecpowers schema init <name>`
@@ -680,6 +729,7 @@ The specified schema doesn't exist.
 The AI tool doesn't recognize OpenSpecPowers commands.
 
 **Solutions:**
+
 - Ensure OpenSpecPowers is initialized: `openspecpowers init`
 - Regenerate skills: `openspecpowers update`
 - Check that `.claude/skills/` directory exists (for Claude Code)
@@ -690,6 +740,7 @@ The AI tool doesn't recognize OpenSpecPowers commands.
 The AI creates incomplete or incorrect artifacts.
 
 **Solutions:**
+
 - Add project context in `openspecpowers/config.yaml`
 - Add per-artifact rules for specific guidance
 - Provide more detail in your change description
