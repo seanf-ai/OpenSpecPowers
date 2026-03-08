@@ -110,6 +110,20 @@ openspecpowers config profile
 openspecpowers update
 ```
 
+## How the loop works
+
+```mermaid
+flowchart LR
+    A[Idea or bug] --> B[/opsp:explore<br/>optional]
+    B --> C[/opsp:propose<br/>or /opsp:new + /opsp:ff]
+    C --> D[Change folder created<br/>proposal, specs, design, tasks]
+    D --> E[/opsp:apply]
+    E --> F[Code + tests + task updates]
+    F --> G[/opsp:verify<br/>recommended for higher-risk work]
+    G --> H[/opsp:archive]
+    H --> I[Specs updated<br/>change archived]
+```
+
 ## See it in action
 
 ```text
