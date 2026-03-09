@@ -20,6 +20,34 @@ const POSTHOG_HOST = 'https://edge.openspecpowers.dev';
 
 let posthogClient: PostHog | null = null;
 let anonymousId: string | null = null;
+let restoreConsoleError: (() => void) | null = null;
+
+function shouldSuppressPostHogError(args: unknown[]): boolean {
+  const [firstArg] = args;
+  return typeof firstArg === 'string' && firstArg.startsWith('Error while flushing PostHog');
+}
+
+function installPostHogErrorFilter(): void {
+  if (restoreConsoleError) {
+    return;
+  }
+
+  const originalConsoleError = console.error;
+  const forwardConsoleError = originalConsoleError.bind(console);
+
+  console.error = ((...args: unknown[]) => {
+    if (shouldSuppressPostHogError(args)) {
+      return;
+    }
+
+    forwardConsoleError(...args);
+  }) as typeof console.error;
+
+  restoreConsoleError = () => {
+    console.error = originalConsoleError;
+    restoreConsoleError = null;
+  };
+}
 
 /**
  * Check if telemetry is enabled.
@@ -77,6 +105,7 @@ export async function getOrCreateAnonymousId(): Promise<string> {
  */
 function getClient(): PostHog {
   if (!posthogClient) {
+    installPostHogErrorFilter();
     posthogClient = new PostHog(POSTHOG_API_KEY, {
       host: POSTHOG_HOST,
       flushAt: 1, // Send immediately, don't batch
@@ -157,5 +186,6 @@ export async function shutdown(): Promise<void> {
     // Silent failure - telemetry should never break CLI exit
   } finally {
     posthogClient = null;
+    restoreConsoleError?.();
   }
 }

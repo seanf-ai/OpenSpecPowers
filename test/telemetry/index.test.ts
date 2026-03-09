@@ -41,7 +41,9 @@ describe('telemetry/index', () => {
     consoleLogSpy = vi.spyOn(console, 'log').mockImplementation(() => {});
   });
 
-  afterEach(() => {
+  afterEach(async () => {
+    await shutdown();
+
     // Restore original env
     process.env = originalEnv;
 
@@ -114,6 +116,32 @@ describe('telemetry/index', () => {
       await trackCommand('test', '1.0.0');
 
       expect(PostHog).toHaveBeenCalled();
+    });
+
+    it('should suppress PostHog flush noise but restore normal console.error after shutdown', async () => {
+      delete process.env.OPENSPEC_TELEMETRY;
+      delete process.env.DO_NOT_TRACK;
+      delete process.env.CI;
+
+      const consoleErrorMock = vi.fn();
+      console.error = consoleErrorMock as typeof console.error;
+
+      const mockPostHog = {
+        capture: vi.fn(() => {
+          console.error('Error while flushing PostHog', new Error('Network error'));
+        }),
+        shutdown: vi.fn().mockResolvedValue(undefined),
+      };
+      (PostHog as any).mockImplementation(() => mockPostHog);
+
+      await trackCommand('test', '1.0.0');
+
+      expect(consoleErrorMock).not.toHaveBeenCalled();
+
+      await shutdown();
+
+      console.error('regular stderr message');
+      expect(consoleErrorMock).toHaveBeenCalledWith('regular stderr message');
     });
   });
 
